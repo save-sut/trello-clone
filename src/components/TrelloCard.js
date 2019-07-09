@@ -47,7 +47,7 @@ const DeleteButton = styled(Icon)`
     }
 `
 
-const TrelloCard = React.memo(({ text, id, listId, index, dispatch }) => {
+const TrelloCard = React.memo(({ text, id, listID, index, dispatch }) => {
     const [isEditing, setIsEditing] = useState(false)
     const [cardText, setText] = useState(text)
 
@@ -56,7 +56,7 @@ const TrelloCard = React.memo(({ text, id, listId, index, dispatch }) => {
     }
 
     const handleDeleteCard = () => {
-        dispatch(deleteCard(id, listId))
+        dispatch(deleteCard(id, listID))
     }
 
     const handleChange = e => {
@@ -66,7 +66,7 @@ const TrelloCard = React.memo(({ text, id, listId, index, dispatch }) => {
     const saveCard = e => {
         // run redux action
         e.preventDefault()
-        dispatch(editCard(id, listId, cardText))
+        dispatch(editCard(id, listID, cardText))
         setIsEditing(false)
     }
 

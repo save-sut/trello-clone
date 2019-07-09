@@ -1,22 +1,22 @@
 import { CONSTANTS } from './../actions'
 
-export const addCard = (listId, text) => {
+export const addCard = (listID, text) => {
     return {
         type: CONSTANTS.ADD_CARD,
-        payload: { listId, text }
+        payload: { listID, text }
     }
 }
 
-export const editCard = (id, listId, newText) => {
+export const editCard = (id, listID, newText) => {
     return {
         type: CONSTANTS.EDIT_CARD,
-        payload: { id, listId, newText }
+        payload: { id, listID, newText }
     }
 }
 
-export const deleteCard = (id, listId) => {
+export const deleteCard = (id, listID) => {
     return {
         type: CONSTANTS.DELETE_CARD,
-        payload: { id, listId }
+        payload: { id, listID }
     }
 }

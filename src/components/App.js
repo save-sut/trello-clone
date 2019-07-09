@@ -1,7 +1,6 @@
-import React, { Component, PureComponent } from 'react'
+import React, { PureComponent } from 'react'
 import TrelloList from './TrelloList'
 import { connect } from 'react-redux'
-import TrelloActionButton from './TrelloActionButton'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import { sort } from './../actions'
 import styled from 'styled-components'
@@ -32,10 +31,10 @@ class App extends PureComponent {
     }
 
     render() {
-        const { lists } = this.props
+        const { lists, listOrder, cards } = this.props
         return (
             <DragDropContext onDragEnd={this.onDragEnd}>
-                {/* <h2>Hello Youtube</h2> */}
+                <h2>Trello Board</h2>
                 <Droppable
                     droppableId="all-lists"
                     direction="horizontal"
@@ -44,15 +43,24 @@ class App extends PureComponent {
                         <ListContainer
                             {...provided.droppableProps}
                             ref={provided.innerRef}>
-                            {lists.map((list, index) => (
-                                <TrelloList
-                                    listId={list.id}
-                                    key={list.id}
-                                    title={list.title}
-                                    cards={list.cards}
-                                    index={index}
-                                />
-                            ))}
+                            {listOrder.map((listID, index) => {
+                                const list = lists[listID]
+                                if (list) {
+                                    const listCards = list.cards.map(
+                                        cardID => cards[cardID]
+                                    )
+
+                                    return (
+                                        <TrelloList
+                                            listID={list.id}
+                                            key={list.id}
+                                            title={list.title}
+                                            cards={listCards}
+                                            index={index}
+                                        />
+                                    )
+                                }
+                            })}
                             {provided.placeholder}
                             <TrelloCreate list />
                         </ListContainer>
@@ -63,15 +71,10 @@ class App extends PureComponent {
     }
 }
 
-const styles = {
-    listContainer: {
-        display: 'flex',
-        flexDirection: 'row'
-    }
-}
-
 const mapStateToProps = state => ({
-    lists: state.lists
+    lists: state.lists,
+    listOrder: state.listOrder,
+    cards: state.cards
 })
 
 export default connect(mapStateToProps)(App)

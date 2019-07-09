@@ -28,21 +28,21 @@ export const sort = (
     }
 }
 
-export const editTitle = (listId, newTitle) => {
+export const editTitle = (listID, newTitle) => {
     return {
         type: CONSTANTS.EDIT_LIST_ITEM,
         payload: {
-            listId,
+            listID,
             newTitle
         }
     }
 }
 
-export const deleteList = listId => {
+export const deleteList = listID => {
     return {
         type: CONSTANTS.DELETE_LIST,
         payload: {
-            listId
+            listID
         }
     }
 }

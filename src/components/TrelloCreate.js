@@ -46,14 +46,14 @@ class TrelloCreate extends React.PureComponent {
     }
 
     handleAddCard = () => {
-        const { dispatch, listId } = this.props
+        const { dispatch, listID } = this.props
         const { text } = this.state
 
         if (text) {
             this.setState({
                 text: ''
             })
-            dispatch(addCard(listId, text))
+            dispatch(addCard(listID, text))
         }
     }
 

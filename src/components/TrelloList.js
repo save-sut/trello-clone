@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import TrelloCard from './TrelloCard'
 import TrelloCreate from './TrelloCreate'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
@@ -27,6 +27,7 @@ const ListContainer = styled.div`
 
 const StyledInput = styled.input`
     width: 100%;
+    height: 100%;
     border: none;
     outline-color: blue;
     border-radius: 3px;
@@ -53,7 +54,7 @@ const ListTitle = styled.h4`
     }
 `
 
-const TrelloList = ({ title, cards, listId, index, dispatch }) => {
+const TrelloList = ({ title, cards, listID, index, dispatch }) => {
     const [isEditing, setIsEditing] = useState(false)
     const [listTitle, setListTitle] = useState(title)
 
@@ -83,50 +84,52 @@ const TrelloList = ({ title, cards, listId, index, dispatch }) => {
 
     const handleFinishEditing = () => {
         setIsEditing(false)
-        dispatch(editTitle(listId, listTitle))
+        dispatch(editTitle(listID, listTitle))
     }
 
     const handleDeleteList = () => {
-        dispatch(deleteList(listId))
+        dispatch(deleteList(listID))
     }
 
     return (
-        <Draggable draggableId={String(listId)} index={index}>
+        <Draggable draggableId={String(listID)} index={index}>
             {provided => (
                 <ListContainer
                     {...provided.draggableProps}
                     ref={provided.innerRef}
                     {...provided.dragHandleProps}>
-                    <Droppable droppableId={String(listId)} type="card">
+                    <Droppable droppableId={String(listID)} type="card">
                         {provided => (
-                            <div
-                                {...provided.droppableProps}
-                                ref={provided.innerRef}>
-                                {/* <h4>{title}</h4> */}
-                                {isEditing ? (
-                                    renderEditInput()
-                                ) : (
-                                    <TitleContainer
-                                        onClick={() => setIsEditing(true)}>
-                                        <ListTitle>{listTitle}</ListTitle>
-                                        <DeleteButton
-                                            onClick={handleDeleteList}>
-                                            delete
-                                        </DeleteButton>
-                                    </TitleContainer>
-                                )}
-                                {cards.map((card, index) => (
-                                    <TrelloCard
-                                        key={card.id}
-                                        index={index}
-                                        text={card.text}
-                                        id={card.id}
-                                        index={index}
-                                        listId={listId}
-                                    />
-                                ))}
-                                {provided.placeholder}
-                                <TrelloCreate listId={listId} />
+                            <div>
+                                <div>
+                                    {isEditing ? (
+                                        renderEditInput()
+                                    ) : (
+                                        <TitleContainer
+                                            onClick={() => setIsEditing(true)}>
+                                            <ListTitle>{listTitle}</ListTitle>
+                                            <DeleteButton
+                                                onClick={handleDeleteList}>
+                                                delete
+                                            </DeleteButton>
+                                        </TitleContainer>
+                                    )}
+                                </div>
+                                <div
+                                    {...provided.droppableProps}
+                                    ref={provided.innerRef}>
+                                    {cards.map((card, index) => (
+                                        <TrelloCard
+                                            key={card.id}
+                                            text={card.text}
+                                            id={card.id}
+                                            index={index}
+                                            listID={listID}
+                                        />
+                                    ))}
+                                    {provided.placeholder}
+                                    <TrelloCreate listID={listID} />
+                                </div>
                             </div>
                         )}
                     </Droppable>
