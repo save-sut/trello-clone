@@ -11,6 +11,15 @@ const ListContainer = styled.div`
     height: 100%;
     padding: 8px;
     margin-right: 8px;
+
+    h4 {
+        margin: 10px;
+
+        color: #172b4d;
+        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+            Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+        font-size: 14px;
+    }
 `
 
 const TrelloList = ({ title, cards, listId, index }) => {
@@ -21,9 +30,11 @@ const TrelloList = ({ title, cards, listId, index }) => {
                     {...provided.draggableProps}
                     ref={provided.innerRef}
                     {...provided.dragHandleProps}>
-                    <Droppable droppableId={String(listId)} type='card'>
+                    <Droppable droppableId={String(listId)} type="card">
                         {provided => (
-                            <div {...provided.droppableProps} ref={provided.innerRef}>
+                            <div
+                                {...provided.droppableProps}
+                                ref={provided.innerRef}>
                                 <h4>{title}</h4>
                                 {cards.map((card, index) => (
                                     <TrelloCard
