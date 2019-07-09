@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import TrelloCard from './TrelloCard'
-import TrelloActionButton from './TrelloActionButton'
+import TrelloCreate from './TrelloCreate'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
+import { editTitle, deleteList } from './../actions'
+import Icon from '@material-ui/core/Icon'
 
 const ListContainer = styled.div`
     background-color: #dfe3e6;
@@ -22,7 +25,71 @@ const ListContainer = styled.div`
     }
 `
 
-const TrelloList = ({ title, cards, listId, index }) => {
+const StyledInput = styled.input`
+    width: 100%;
+    border: none;
+    outline-color: blue;
+    border-radius: 3px;
+    margin-bottom: 3px;
+    padding: 5px;
+`
+
+const TitleContainer = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+`
+
+const DeleteButton = styled(Icon)`
+    cursor: pointer;
+`
+
+const ListTitle = styled.h4`
+    transition: background 0.3s ease-in;
+    ${TitleContainer}:hover & {
+        background: #ccc;
+    }
+`
+
+const TrelloList = ({ title, cards, listId, index, dispatch }) => {
+    const [isEditing, setIsEditing] = useState(false)
+    const [listTitle, setListTitle] = useState(title)
+
+    const renderEditInput = () => {
+        return (
+            <from onSubmit={handleFinishEditing}>
+                <StyledInput
+                    type="text"
+                    value={listTitle}
+                    onChange={handleChange}
+                    autoFocus
+                    onFocus={handleFocus}
+                    onBlur={handleFinishEditing}
+                />
+            </from>
+        )
+    }
+
+    const handleFocus = e => {
+        e.target.select()
+    }
+
+    const handleChange = e => {
+        e.preventDefault()
+        setListTitle(e.target.value)
+    }
+
+    const handleFinishEditing = () => {
+        setIsEditing(false)
+        dispatch(editTitle(listId, listTitle))
+    }
+
+    const handleDeleteList = () => {
+        dispatch(deleteList(listId))
+    }
+
     return (
         <Draggable draggableId={String(listId)} index={index}>
             {provided => (
@@ -35,17 +102,31 @@ const TrelloList = ({ title, cards, listId, index }) => {
                             <div
                                 {...provided.droppableProps}
                                 ref={provided.innerRef}>
-                                <h4>{title}</h4>
+                                {/* <h4>{title}</h4> */}
+                                {isEditing ? (
+                                    renderEditInput()
+                                ) : (
+                                    <TitleContainer
+                                        onClick={() => setIsEditing(true)}>
+                                        <ListTitle>{listTitle}</ListTitle>
+                                        <DeleteButton
+                                            onClick={handleDeleteList}>
+                                            delete
+                                        </DeleteButton>
+                                    </TitleContainer>
+                                )}
                                 {cards.map((card, index) => (
                                     <TrelloCard
                                         key={card.id}
                                         index={index}
                                         text={card.text}
                                         id={card.id}
+                                        index={index}
+                                        listId={listId}
                                     />
                                 ))}
                                 {provided.placeholder}
-                                <TrelloActionButton listId={listId} />
+                                <TrelloCreate listId={listId} />
                             </div>
                         )}
                     </Droppable>
@@ -55,4 +136,4 @@ const TrelloList = ({ title, cards, listId, index }) => {
     )
 }
 
-export default TrelloList
+export default connect()(TrelloList)

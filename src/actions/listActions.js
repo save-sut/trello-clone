@@ -27,3 +27,22 @@ export const sort = (
         }
     }
 }
+
+export const editTitle = (listId, newTitle) => {
+    return {
+        type: CONSTANTS.EDIT_LIST_ITEM,
+        payload: {
+            listId,
+            newTitle
+        }
+    }
+}
+
+export const deleteList = listId => {
+    return {
+        type: CONSTANTS.DELETE_LIST,
+        payload: {
+            listId
+        }
+    }
+}

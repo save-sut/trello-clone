@@ -1,17 +1,18 @@
-import React, { Component } from 'react'
+import React, { Component, PureComponent } from 'react'
 import TrelloList from './TrelloList'
 import { connect } from 'react-redux'
 import TrelloActionButton from './TrelloActionButton'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 import { sort } from './../actions'
 import styled from 'styled-components'
+import TrelloCreate from './TrelloCreate'
 
 const ListContainer = styled.div`
     display: flex;
     flex-direction: row;
 `
 
-class App extends Component {
+class App extends PureComponent {
     onDragEnd = result => {
         const { destination, source, draggableId, type } = result
         if (!destination) {
@@ -53,7 +54,7 @@ class App extends Component {
                                 />
                             ))}
                             {provided.placeholder}
-                            <TrelloActionButton list />
+                            <TrelloCreate list />
                         </ListContainer>
                     )}
                 </Droppable>
