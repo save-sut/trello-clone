@@ -2,13 +2,7 @@ import { CONSTANTS } from '../actions'
 
 let cardID = 0
 
-const initialState = {
-    'card-0': {
-        text: 'Last Episode',
-        id: `card-0`,
-        list: 'list-0'
-    }
-}
+const initialState = {}
 
 const cardsReducer = (state = initialState, action) => {
     switch (action.type) {

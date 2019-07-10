@@ -24,7 +24,6 @@ const listOrderReducer = (state = initialState, action) => {
                 newState.splice(droppableIndexEnd, 0, ...pulledOutList)
                 return [...newState]
             }
-            console.log('2');
             return state
         }
 
