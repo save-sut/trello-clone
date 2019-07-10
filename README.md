@@ -29,3 +29,4 @@ Your app is ready to be deployed!
 ## Special Thanks
 
 ** SelfDevTV - https://www.youtube.com/watch?v=RDQGPs7StNA&list=PLkIwB9zsYA2is0Hb-uRoDhPoSG82Hap1h **
+** How to deploy a create react app to Github pages - https://reactgo.com/deploy-react-app-github-pages/ **
