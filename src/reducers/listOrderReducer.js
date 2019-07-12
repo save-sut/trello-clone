@@ -1,12 +1,12 @@
 import { CONSTANTS } from '../actions'
-let listID = 0
-const initialState = ['list-0']
+// let listID = 0
+const initialState = []
 
 const listOrderReducer = (state = initialState, action) => {
     switch (action.type) {
         case CONSTANTS.ADD_LIST: {
-            listID += 1
-            const newId = `list-${listID}`
+            const {id} = action.payload
+            const newId = `list-${id}`
             return [...state, newId]
         }
 

@@ -1,9 +1,11 @@
 import { CONSTANTS } from './../actions'
+import uuid from 'uuidv4'
 
 export const addCard = (listID, text) => {
+    const id = uuid()
     return {
         type: CONSTANTS.ADD_CARD,
-        payload: { listID, text }
+        payload: { listID, text, id }
     }
 }
 
